@@ -1,2 +1,9 @@
 # dallESpeckleMap
-Speckle 2024 BeyondVerse Hackathon project 
+A collaborative Speckle 2024 BeyondVerse Hackathon project 
+
+## Teammates
+
+Josie Harrison
+Jordana Rosa
+Marwan Elzainy
+Abhishek Shinde
