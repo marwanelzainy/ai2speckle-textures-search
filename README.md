@@ -1,9 +1,5 @@
 # dallESpeckleMap
 
-## About
-
-This is a collaborative Beyond the Speckleverse: Speckle 2024 Hackathon project submission. 
-
 ## Problem Statement
 
 The original idea sprung from Jordana Rosa, our teammate with her current workflows at Perkins+Wills. The problem statement is described as follows:
