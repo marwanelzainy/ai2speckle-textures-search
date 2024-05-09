@@ -12,13 +12,14 @@ The original idea sprung off from Jordana Rosa, our teammate with her current wo
 
 ## Our Solution
 
+We want to solve this using a Full Stack Speckle solution powered with Speckle Automate and Speckle Material + threejs material functionalities combined with Advanced Image processing algorithms 
 
 ## Teammates
 
 Josie Harrison (Machine Learning)
 Jordana Rosa(Product Manager)
 Marwan Elzainy(FullStack)
-Abhishek Shinde(Backend + MLOps)
+Abhishek Shinde(Backend)
 
 ## Documentation
 
