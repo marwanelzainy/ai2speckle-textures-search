@@ -16,9 +16,9 @@ The original idea sprung off from Jordana Rosa, our teammate with her current wo
 ## Teammates
 
 Josie Harrison (Machine Learning)
-Jordana Rosa
+Jordana Rosa(Product Manager)
 Marwan Elzainy(FullStack)
-Abhishek Shinde(FullStack)
+Abhishek Shinde(Backend)
 
 ## Documentation
 
