@@ -13,7 +13,7 @@ We want to solve this using a Full Stack Speckle solution powered with Speckle A
 ## Teammates
 
 Josie Harrison (Machine Learning)
-Jordana Rosa(Product Manager)
+Jordana Rosa(Product Manager|Team Coordinator)
 Marwan Elzainy(FullStack)
 Abhishek Shinde(Backend)
 
