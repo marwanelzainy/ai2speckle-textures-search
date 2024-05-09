@@ -18,7 +18,7 @@ The original idea sprung off from Jordana Rosa, our teammate with her current wo
 Josie Harrison (Machine Learning)
 Jordana Rosa(Product Manager)
 Marwan Elzainy(FullStack)
-Abhishek Shinde(Backend)
+Abhishek Shinde(Backend + MLOps)
 
 ## Documentation
 
