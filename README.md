@@ -12,13 +12,23 @@ We want to solve this using a Full Stack Speckle solution powered with Speckle A
 
 ## Teammates
 
-Josie Harrison (Machine Learning)
-Jordana Rosa(Product Manager|Team Coordinator)
-Marwan Elzainy(FullStack)
+Josie Harrison (Machine Learning Developer)
+Marwan Elzainy(Front-End Developer)
+Jordana Rosa(Idea Conception)
 Abhishek Shinde(Research|Documentation)
 
 ## Documentation
 
+There are three components to the dallESpeckleMap React App
+1. A React Front end app which consists of:
+    - Speckle Stream Viewer via authentication
+    - A Button that takes a snapshot of the stream and uses AI Render Image API to render the stream and feeds it to the AI Image Analyzer Application based on whether the user accepts it.
+    - A Button that calls the AI image Analyzer Application that then applies material to the elements in the Speckle Stream.
+2. An AI Image Analyzer Application that generates 3JS material maps by segmenting and post-processing the segmented labeled image from AI render.
+3. An AI Image Render  Application that does an API call to the free available state-of-the-art Image to Image AI Generators in the Generative AI community.
+
+
+## Limitation
 
 ## Installation 
 
