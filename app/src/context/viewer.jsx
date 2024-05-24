@@ -6,10 +6,12 @@ import {
   CameraController,
   SelectionExtension,
 } from "@speckle/viewer";
+import { useAuth } from "./auth";
 
 const ViewerContext = createContext();
 
 export function ViewerProvider({ modelLink, children }) {
+  const { token } = useAuth();
   const [viewer, setViewer] = useState();
   useEffect(() => {
     async function main() {
@@ -30,7 +32,7 @@ export function ViewerProvider({ modelLink, children }) {
       const selector = viewer.createExtension(SelectionExtension);
 
       /** Create a loader for the speckle stream */
-      const loader = new SpeckleLoader(viewer.getWorldTree(), modelLink, "");
+      const loader = new SpeckleLoader(viewer.getWorldTree(), modelLink, token);
       /** Load the speckle data */
       await viewer.loadObject(loader, true);
       setViewer(viewer);
