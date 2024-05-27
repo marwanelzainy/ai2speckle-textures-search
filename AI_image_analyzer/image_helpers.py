@@ -72,7 +72,7 @@ def compute_scores(emb_one, emb_two):
     return scores.numpy().tolist()
 
 
-def fetch_similar(image, transformation_chain, device, model, all_candidate_embeddings, candidate_ids, top_k=5):
+def fetch_similar(image, transformation_chain, device, model, all_candidate_embeddings, candidate_ids, top_k=3):
     """Fetches the `top_k` similar images with `image` as the query."""
     # Prepare the input query image for embedding computation.
     image_transformed = transformation_chain(image).unsqueeze(0)
