@@ -3,6 +3,7 @@ from transformers import pipeline, AutoImageProcessor, SegformerForSemanticSegme
 from typing import List
 from PIL import Image, ImageDraw, ImageFont, ImageChops, ImageMorph
 import numpy as np
+import datasets
 
 def find_center_of_non_black_pixels(image):
     # Get image dimensions
@@ -253,7 +254,7 @@ DEVICE = 'cuda' if torch.cuda.is_available() else "cpu"
 
 pipe = pipeline("image-segmentation", model="nvidia/segformer-b5-finetuned-ade-640-640")
 
-def inference(
+def segmentation_inference(
         image_rgb_pil: Image.Image,
         savepath: str
 ):
@@ -285,3 +286,32 @@ def inference(
 
     # Display the final image
     # image_rgb_pil.show()
+
+def online_segmentation_inference(
+        image_rgb_pil: Image.Image
+):
+    outputs = pipe(image_rgb_pil, points_per_batch=32)
+    
+    # Create an image dictionary
+    image_dict = {"image": [], "label":[]}
+
+    for i, prediction in enumerate(outputs):
+        label = prediction['label']
+        if (label == "floor") | (label == "wall") | (label == "ceiling"): 
+            mask = prediction['mask']
+
+            fill_image = Image.new("RGB", image_rgb_pil.size, color=(255,255,255))
+            cutout_image = Image.composite(image_rgb_pil, fill_image, mask)
+
+            # Crop mask
+            center, bbox_size = find_center_of_non_black_pixels(cutout_image)
+            if center is not None:
+                centered_image = create_centered_image(cutout_image, center, bbox_size)
+
+                # Add image to image dictionary
+                image_dict["image"].append(centered_image)
+                image_dict["label"].append(label)
+
+    segmented_ds = datasets.Dataset.from_dict(image_dict).cast_column("image", datasets.Image())
+    return segmented_ds
+                
