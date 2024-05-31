@@ -1,21 +1,29 @@
 import { Button, Typography } from "antd";
 
-export function RenderPopup({ togglePopup }) {
+export function RenderPopup({ togglePopup, render }) {
   return (
     <div style={styles.popupOverlay}>
       <div style={styles.popupContent}>
-        <img
-          src="https://via.placeholder.com/1500"
-          alt="Placeholder"
-          style={styles.image}
-        />
+        <img src={render} alt="Placeholder" style={styles.image} />
         <div style={styles.buttonGroup}>
-          <Button type="text" onClick={() => alert("Button 1 clicked")}>
+          <Button
+            type="text"
+            onClick={() => {
+              // hit end point and set materials
+              alert("Button 1 clicked");
+            }}
+          >
             <Typography.Title level={5} style={{ margin: 0, color: "white" }}>
               Continue
             </Typography.Title>
           </Button>
-          <Button type="text" onClick={() => alert("Button 2 clicked")}>
+          <Button
+            type="text"
+            onClick={() => {
+              // fetch and then set render
+              alert("Button 2 clicked");
+            }}
+          >
             <Typography.Title level={5} style={{ margin: 0, color: "white" }}>
               Rerender
             </Typography.Title>

@@ -11,7 +11,7 @@ const StreamList = () => {
   const { streams, loading, error } = useStreams({});
 
   useEffect(() => {
-    console.log(streams);
+    // console.log(streams);
   }, [streams]);
   return (
     <PageColumn header={[]}>
@@ -35,7 +35,6 @@ const StreamList = () => {
               grid={{ gutter: 16, column: 5 }}
               dataSource={stream.branches.items}
               renderItem={(branch) => {
-                console.log("branch", branch);
                 return (
                   <List.Item>
                     {branch.commits.items[0] && (

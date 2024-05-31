@@ -1,8 +1,8 @@
 # The Speckle Application Id
-REACT_APP_SPECKLE_ID=f80fb207e5 
+REACT_APP_SPECKLE_ID=c1365d97cd 
 
 # The Speckle Application Secret
-REACT_APP_SPECKLE_SECRET=577121dfe4
+REACT_APP_SPECKLE_SECRET=c9374dabe8
 
 REACT_APP_SERVER_URL=https://app.speckle.systems
 REACT_APP_SPECKLE_NAME="Test App"
