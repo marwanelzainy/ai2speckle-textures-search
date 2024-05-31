@@ -69,7 +69,7 @@ pyparsing==3.1.2
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
 python-multipart==0.0.9
-pytz==2024.1
+# pytz==2024.1
 pywin32==306
 PyYAML==6.0.1
 pyzmq==26.0.3

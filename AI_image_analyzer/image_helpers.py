@@ -1,6 +1,6 @@
 import os
 from PIL import Image 
-import cv2
+from cv2 import imread, cvtColor, COLOR_BGR2GRAY, COLOR_BGR2BGRA, COLOR_BGRA2RGB, threshold, THRESH_BINARY_INV, findContours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, contourArea, minEnclosingCircle
 import numpy as np
 import torch
 import matplotlib.pyplot as plt
@@ -25,18 +25,18 @@ def convert_images_to_grayscale(folder_path):
 def crop_center_largest_contour(folder_path):
     for each_image in os.listdir(folder_path):
         image_path = os.path.join(folder_path, each_image)
-        image = cv2.imread(image_path)
-        gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        image = imread(image_path)
+        gray_image = cvtColor(image, COLOR_BGR2GRAY)
 
         # Threshold the image to get the non-white pixels
-        _, binary_mask = cv2.threshold(gray_image, 254, 255, cv2.THRESH_BINARY_INV)
+        _, binary_mask = threshold(gray_image, 254, 255, THRESH_BINARY_INV)
 
         # Find the largest contour
-        contours, _ = cv2.findContours(binary_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        largest_contour = max(contours, key=cv2.contourArea)
+        contours, _ = findContours(binary_mask, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE)
+        largest_contour = max(contours, key=contourArea)
 
         # Get the minimum enclosing circle
-        (x, y), radius = cv2.minEnclosingCircle(largest_contour)
+        (x, y), radius = minEnclosingCircle(largest_contour)
         center = (int(x), int(y))
         radius = int(radius/3) # Divide by three (arbitrary) to make shape better
 
@@ -46,8 +46,8 @@ def crop_center_largest_contour(folder_path):
         y_min = max(0, center[1] - radius)
         y_max = min(image.shape[0], center[1] + radius)
         cropped_image = image[y_min:y_max, x_min:x_max]
-        cropped_image_rgba = cv2.cvtColor(cropped_image, cv2.COLOR_BGR2BGRA)
-        cropped_pil_image = Image.fromarray(cv2.cvtColor(cropped_image_rgba, cv2.COLOR_BGRA2RGB))
+        cropped_image_rgba = cvtColor(cropped_image, COLOR_BGR2BGRA)
+        cropped_pil_image = Image.fromarray(cvtColor(cropped_image_rgba, COLOR_BGRA2RGB))
         cropped_pil_image.save(image_path)
 
 def extract_embeddings(transformation_chain, model: torch.nn.Module):
