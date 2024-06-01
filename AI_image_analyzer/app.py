@@ -12,7 +12,6 @@ from gradio_client import Client, file
 
 app = FastAPI()
 
-client = Client("MykolaL/StableDesign")
 ## Initialize the pipeline
 input_images_dir = "image/"
 temp_processing_dir = input_images_dir + "processed/"
@@ -45,6 +44,8 @@ def imageAnalyzer(image: UploadFile = File(...)):
         print(str(e))
         raise HTTPException(status_code=500, detail=str(e))
     
+
+client = Client("MykolaL/StableDesign")
 
 @app.post("/image-render")
 def imageRender(prompt: str, image: UploadFile = File(...)):
@@ -86,3 +87,8 @@ def imageRender(prompt: str, image: UploadFile = File(...)):
     except Exception as e:
         print(str(e))
         raise HTTPException(status_code=500, detail=str(e))
+    
+
+@app.get("/")
+def test():
+    return {"Hello": "World"}
