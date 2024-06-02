@@ -1,4 +1,4 @@
-# dallESpeckleMap
+# ai2SpeckleApp
 
 ## Problem Statement
 
