@@ -11,7 +11,7 @@ def similarity_inference(directory):
     crop_center_largest_contour(directory)
 
     # define processing variables needed for embedding calculation
-    root_directory = "C:/Users/josie/OneDrive - Chalmers/Documents/Speckle hackathon/data/"
+    root_directory = "data/" #"C:/Users/josie/OneDrive - Chalmers/Documents/Speckle hackathon/data/"
     model_ckpt = "nateraw/vit-base-beans" ## FIND DIFFERENT MODEL
     candidate_subset_emb = ds.load_dataset("canadianjosieharrison/2024hackathonembeddingdb")['train']
     extractor = AutoFeatureExtractor.from_pretrained(model_ckpt)
@@ -25,7 +25,7 @@ def similarity_inference(directory):
             T.Normalize(mean=extractor.image_mean, std=extractor.image_std),
         ])
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    pt_directory = root_directory + "materials/embedding_db.pt"
+    pt_directory = root_directory + "embedding_db.pt" #"materials/embedding_db.pt"
     all_candidate_embeddings = torch.load(pt_directory, map_location=device, weights_only=True)
     candidate_ids = []
     for id in range(len(candidate_subset_emb)):
