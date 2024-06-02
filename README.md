@@ -30,6 +30,11 @@ There are three components to the dallESpeckleMap React App
 
 ## Limitation
 
+Currently, Speckle 2.4.0 Material Support allows for multiple materials for built elements such as Walls, Roofs, and Beams from a Stream sent from Revit, Archicad, Rhino, and Autocad.
+However, the latest Speckle Material API dated 06-01-2024 does not allow for Texture to be sent or received from Speckle Stream but only as Flat colors. Hence, we limit our research to 
+just displaying Material options in a Window 
+
 ## Installation 
 
+Work in Progress!!
 
