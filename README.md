@@ -37,10 +37,10 @@ There are currently two challenges
 We explored the Free Image to Image AI Renderers which offer API with minimal to free cost. Based on our exploration, we explored several APIs that offer free or paid pricing for API usage. 
 
 The most promising ones for Image-to-Image Generation API are:
-a. [Monster API using ZeroGPU from HuggingFace](https://developer.monsterapi.ai/reference/post_generate-img2img)  
-b. [Automatic 111 Web UI using Google Colab](https://github.com/AUTOMATIC1111/stable-diffusion-webui) 
-c. [Limewire Developer API](https://developer.limewire.com/image-to-image ) 
-d. [Deep AI (Ai Image Generator API)](https://deepai.org/docs)- 
+- [Monster API using ZeroGPU from HuggingFace](https://developer.monsterapi.ai/reference/post_generate-img2img)  
+- [Automatic 111 Web UI using Google Colab](https://github.com/AUTOMATIC1111/stable-diffusion-webui) 
+- [Limewire Developer API](https://developer.limewire.com/image-to-image ) 
+- [Deep AI (Ai Image Generator API)](https://deepai.org/docs)- 
 
 The end goal with our AI Image Analyzer Application looks similar to this project we found on Hugging Face: [Link ](https://huggingface.co/spaces/MykolaL/StableDesign)
    
