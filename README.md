@@ -30,9 +30,9 @@ There are three components to the dallESpeckleMap React App
 
 ## Limitation
 
-There are currently two challenges
+There are currently two limitations in our workflows. 
 
-###1. AI Image Render API Landscape
+1. AI Image Render API Landscape
 
 We explored the Free Image to Image AI Renderers which offer API with minimal to free cost. Based on our exploration, we explored several APIs that offer free or paid pricing for API usage. 
 
@@ -45,7 +45,7 @@ The most promising ones for Image-to-Image Generation API are:
 The end goal with our AI Image Analyzer Application looks similar to this project we found on Hugging Face: [Link ](https://huggingface.co/spaces/MykolaL/StableDesign)
    
 
-###2. Currently, Speckle 2.4.0 Material Support allows for multiple materials for built elements such as Walls, Roofs, and Beams from a Stream sent from Revit, Archicad, Rhino, and Autocad.
+2. Currently, Speckle 2.4.0 Material Support allows for multiple materials for built elements such as Walls, Roofs, and Beams from a Stream sent from Revit, Archicad, Rhino, and Autocad.
 However, the latest Speckle Material API dated 06-01-2024 does not allow for Texture to be sent or received from Speckle Stream but only as Flat colors. Hence, we limit our research to 
 just displaying Material options in a Window.
 
