@@ -30,7 +30,7 @@ export const useStreams = ({}: Props) => {
 
   const streams = useMemo(() => {
     if (data) {
-      console.log(data);
+      // console.log(data);
       return data.streams.items;
     }
     return [];
