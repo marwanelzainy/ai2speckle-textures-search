@@ -8,6 +8,8 @@ https://drive.google.com/file/d/1TkPfhH8Ezakmusfvw7jpmoNrdYTvA9pq/view?usp=drive
 
 <a href="https://drive.google.com/uc?export=view&id=XXX"><img src="https://drive.google.com/uc?export=view&id=XXX" style="width: 500px; max-width: 100%; height: auto" title="Click for the larger version." /></a>
 
+![image](https://drive.google.com/uc?export=view&id=1TkPfhH8Ezakmusfvw7jpmoNrdYTvA9pq)
+
 
 ## Problem Statement
 
