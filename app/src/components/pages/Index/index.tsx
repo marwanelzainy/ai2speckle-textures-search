@@ -8,9 +8,9 @@ import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism'
 const Index = () => {
 
     const introText = `
-# Welcome to Speckle inside React
+# Welcome to ai2SpeckleApp
 
-# ✨ ❤️ 🕸️
+# ✨ ❤️ 🕸️ 
 
 ## Source Code
 
@@ -25,7 +25,7 @@ The source code for this application is available on [GitHub](https://github.com
 ### Testing This Application
 You can test this application out by logging in using the "Log In" button on the top right corner. This will take you to the main Speckle Server (https://speckle.xyz) where you can log in using your Speckle Account credentials. Once you log in, you will be redirected back to this application and you will be able to see your user information on the top right corner.
 
-You can then view your streams by clicking on the "streams" button on the left hand side of this screen.
+You can then view your streams by clicking on the "streams" button on the left-hand side of this screen.
 
 And that's it! It's a pretty simple application 😅
 
