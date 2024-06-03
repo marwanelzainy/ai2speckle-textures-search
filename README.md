@@ -2,8 +2,6 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/cc65ce29-6c3f-4163-8623-296aeb65cc87/deploy-status)](https://app.netlify.com/sites/ai2speckle/deploys)
 
-https://drive.google.com/file/d/1TkPfhH8Ezakmusfvw7jpmoNrdYTvA9pq/view?usp=sharing
-
 ![image](https://drive.google.com/uc?export=view&id=1TkPfhH8Ezakmusfvw7jpmoNrdYTvA9pq)
 
 
