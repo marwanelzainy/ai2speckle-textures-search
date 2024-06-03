@@ -14,7 +14,7 @@ const Index = () => {
 
 ## Source Code
 
-The source code for this application is available on [GitHub](https://github.com/antoinedao/speckle-demo-app-react.git).
+The source code for this application is available on [GitHub](https://github.com/InquisitiveAS/ai2SpeckleApp.git).
 
 ## User Quick Start
 
@@ -41,7 +41,7 @@ And that's it! It's a pretty simple application 😅
 To get started, clone this repository and install the dependencies:
 
 \`\`\`bash
-git clone https://github.com/antoinedao/speckle-demo-app-react.git
+git clone https://github.com/InquisitiveAS/ai2SpeckleApp.git
 cd speckle-demo-app-react
 yarn install
 \`\`\`
