@@ -11,7 +11,7 @@ The original idea sprung from Jordana Rosa, our teammate with her current AI-pow
 
 ## Our Solution
 
-Instead of Limiting our workflow merely to BIM Applications, we are looking at the much broader vision for Image to Image AI Applications in CAD Ecosystems like Rhinoceros3D, Blender, Unity, and Unreal Engine. These workflows can empower Interior Designers, Facade designers, early-stage design visualization, etc. Combined with Speckles Connectors, this app can also serve as a research Avenue for Text to 3D Generation. 
+Instead of Limiting our workflow to BIM Applications, we are looking at the broader vision for Image AI Applications in CAD Ecosystems like Rhinoceros3D, Blender, Unity, and Unreal Engine. These workflows can empower Interior Designers, Facade designers, early-stage design visualization, etc. Speckle's ability and potential to connect all AEC software + the web gives an added advantage. Web features are highly accessible to all users and easy to develop. With Speckle we can create a simple web tool and integrate the results into any AEC software.
 
 For this proposed vision, we are using a React Application with Speckle Viewer and 3JS functionalities combined with Advanced Image processing and segmentation algorithms for the "AI Image Analyzer" Pipeline and also open source Image to Image AI Rendering APIs for "AI Image Render" Pipeline. Everything is happening on the Front-end and we will get into specifics of it in our documentation. 
 
@@ -24,14 +24,16 @@ Abhishek Shinde(Research|Documentation)
 
 ## Documentation
 
-There are three components to the dallESpeckleMap React App
+![image](https://drive.google.com/uc?export=view&id=1Fio5xeZT2WQn_UehD37LkC74QGL4vKka)
+
+In the above diagram, There are three components to our ai2SpeckleApp:matgen Web Application
 
 1. A React web app which consists of:
-   - Speckle Stream Viewer via authentication
+   - Speckle Stream Viewer(3D Object Loader) via authentication
    - A Button that takes a snapshot of the stream and uses AI Render Image API to render the stream and feeds it to the AI Image Analyzer Application based on whether the user accepts it.
    - A Button that calls the AI image Analyzer Application that then applies material to the elements in the Speckle Stream.
-2. An AI Image Analyzer Application that generates 3JS material maps by segmenting and post-processing the segmented labeled image from AI render.
-3. An AI Image Render Application that does an API call to the free available state-of-the-art Image to Image AI Generators in the Generative AI community.
+2. An AI Image Analyzer Application that generates 3JS material maps by segmenting and post-processing the segmented labeled image from AI render.( Part of AI Workflow)
+3. An AI Image Render Application that does an API call to the free available state-of-the-art Image to Image AI Generators in the Generative AI community.( Part of AI Workflow)
 
 ## Limitation
 
