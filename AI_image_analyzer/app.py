@@ -10,7 +10,7 @@ from similarity_inference import similarity_inference
 import json
 from gradio_client import Client, file
 
-app = FastAPI()
+app = FastAPI(docs_url="/")
 
 ## Initialize the pipeline
 input_images_dir = "image/"
@@ -89,6 +89,6 @@ def imageRender(prompt: str, image: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail=str(e))
     
 
-@app.get("/")
-def test():
-    return {"Hello": "World"}
+# @app.get("/")
+# def test():
+#     return {"Hello": "World"}
