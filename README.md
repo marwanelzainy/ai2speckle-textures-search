@@ -1,6 +1,7 @@
 # ai2SpeckleApp:matGen
 
-![image](https://drive.google.com/uc?export=view&id=1TkPfhH8Ezakmusfvw7jpmoNrdYTvA9pq)
+![image](https://drive.google.com/uc?export=view&id=1WJfsmOxAo_4Xp9vwAxm57CzD5P7SAWsS)
+
 
 ## Problem Statement
 
