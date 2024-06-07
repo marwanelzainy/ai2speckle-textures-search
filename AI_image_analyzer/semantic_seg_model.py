@@ -9,7 +9,7 @@ def find_center_of_non_black_pixels(image):
     # Get image dimensions
     width, height = image.size
     
-    # Iterate over the pixels to find the center of the non-black pixels
+    # Iterate over the pixels to find the center of the non-whitepixels
     total_x = 0
     total_y = 0
     num_non_black_pixels = 0
@@ -17,7 +17,7 @@ def find_center_of_non_black_pixels(image):
     for y in range(height):
         for x in range(width):
             pixel = image.getpixel((x, y))
-            if pixel != (255, 255, 255):  # Non-black pixel
+            if pixel != (255, 255, 255):  # Non-white pixel
                 total_x += x
                 total_y += y
                 num_non_black_pixels += 1
@@ -29,9 +29,9 @@ def find_center_of_non_black_pixels(image):
     bbox_width = right - left
     bbox_height = bottom - top
     bbox_size = max(bbox_height, bbox_width)
-    # Calculate the center of the non-black pixels
+    # Calculate the center of the non-white pixels
     if num_non_black_pixels == 0:
-        return None  # No non-black pixels found
+        return None  # No non-white pixels found
     center_x = total_x // num_non_black_pixels
     center_y = total_y // num_non_black_pixels
     return (center_x, center_y), bbox_size

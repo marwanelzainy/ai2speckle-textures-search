@@ -45,12 +45,11 @@ def image_analyzer(image: UploadFile = File(...)):
         segmentation_inference(image, temp_processing_dir)
         print("image segmented successfully. Starting similarity inference...", datetime.now())
         # identify similar materials for each component
-        matching_urls = similarity_inference(temp_processing_dir)
+        matching_textures = similarity_inference(temp_processing_dir)
         print("done", datetime.now())
-        print(matching_urls)
 
         # Return the urls in a JSON response
-        return matching_urls
+        return matching_textures
     
     except Exception as e:
         print(str(e))
