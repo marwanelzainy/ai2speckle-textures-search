@@ -56,6 +56,7 @@ The end goal with our AI Image Analyzer Application looks similar to this projec
    However, the latest Speckle Material API dated 06-01-2024 does not allow for Texture to be sent or received from Speckle Stream but only as Flat colors. Hence, we limit our research to
    just displaying Material options in a Window.
 
-## Installation
+## FUTURE IMPROVEMENTS
 
-Work in Progress!!
+![image](https://drive.google.com/uc?export=view&id=1mYlxp9jANl7ho2QhP9nc0QpsO52VdFGO)
+
