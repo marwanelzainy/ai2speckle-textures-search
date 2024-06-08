@@ -5,9 +5,9 @@ export const REFRESH_TOKEN = `${APP_NAME}.RefreshToken`;
 export const CHALLENGE = `${APP_NAME}.Challenge`;
 
 export const SERVER_URL =
-  process.env.REACT_APP_SERVER_URL ?? "https://speckle.xyz";
-const SPECKLE_APP_ID = process.env.REACT_APP_SPECKLE_ID ?? "9397f1dfb2";
-const SPECKLE_APP_SECRET = process.env.REACT_APP_SPECKLE_SECRET ?? "94217b3eee";
+  process.env.REACT_APP_SERVER_URL ?? "https://app.speckle.systems";
+const SPECKLE_APP_ID = process.env.REACT_APP_SPECKLE_ID ?? "c1365d97cd";
+const SPECKLE_APP_SECRET = process.env.REACT_APP_SPECKLE_SECRET ?? "c9374dabe8";
 
 // Create an auth context
 export const AuthContext = React.createContext({

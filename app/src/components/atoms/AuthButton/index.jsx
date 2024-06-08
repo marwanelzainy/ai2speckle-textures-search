@@ -3,7 +3,7 @@ import { useAuth } from "../../../context/auth";
 import { Avatar, Button, Space, Typography } from "antd";
 import { useUser } from "../../../context/user";
 
-const AuthButton = ({}) => {
+const AuthButton = () => {
   const { token, login, logOut } = useAuth();
   const { user } = useUser();
   return token ? (

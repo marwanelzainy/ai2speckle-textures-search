@@ -94,7 +94,7 @@ export function RenderPopup({ togglePopup, render, setRender, setMaterials }) {
               }}
             >
               <Typography.Title level={5} style={{ margin: 0, color: "white" }}>
-                Continue
+                Extract
               </Typography.Title>
             </Button>
             <Button
