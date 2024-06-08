@@ -1,5 +1,5 @@
-# ai2SpeckleApp:matGen
-
+# ai2speckle: Textures search
+[![Netlify Status](https://api.netlify.com/api/v1/badges/cc65ce29-6c3f-4163-8623-296aeb65cc87/deploy-status)](https://app.netlify.com/sites/ai2speckle/deploys)
 ![image](https://drive.google.com/uc?export=view&id=1WJfsmOxAo_4Xp9vwAxm57CzD5P7SAWsS)
 
 ## Documentation
