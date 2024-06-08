@@ -42,7 +42,23 @@ In the above diagram, There are three components to our "ai2SpeckleApp:matgen We
 
 ## INSTALLATION
 
-Please follow the steps on the authentication for installing this repository
+```bash
+git clone https://github.com/marwanelzainy/ai2speckle-textures-search
+
+# install and run the frontend
+
+cd app
+npm install
+npm start
+
+cd ..
+
+# also install and run the backend
+
+cd AI_image_Analyzer
+pip install -r requirements.txt
+fastapi dev app.py
+```
 
 ## FUTURE IMPROVEMENTS
 
