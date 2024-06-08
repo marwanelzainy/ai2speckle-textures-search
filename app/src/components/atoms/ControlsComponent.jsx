@@ -38,10 +38,9 @@ export default function ControlsComponent({
               method: "POST",
               headers: {
                 accept: "application/json",
+                "Access-Control-Allow-Origin": "*",
                 // 'Content-Type' is automatically set to 'multipart/form-data' when using FormData
               },
-              mode: "cors", // CORS mode
-              credentials: "same-origin",
               body: formData,
             }
           );

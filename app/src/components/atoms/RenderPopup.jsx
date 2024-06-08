@@ -77,10 +77,10 @@ export function RenderPopup({ togglePopup, render, setRender, setMaterials }) {
                     method: "POST",
                     headers: {
                       accept: "application/json",
+                      "Access-Control-Allow-Origin": "*",
                       // 'Content-Type' is automatically set to 'multipart/form-data' when using FormData
                     },
-                    mode: "cors", // CORS mode
-                    credentials: "same-origin",
+
                     body: formData,
                   });
                   const result = await response.json();
