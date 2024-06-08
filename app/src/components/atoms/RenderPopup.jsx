@@ -1,66 +1,118 @@
 import { Button, Typography } from "antd";
 import { Spin } from "antd";
+import React, { useEffect, useState } from "react";
 
-export function RenderPopup({ togglePopup, render, setRender }) {
+export function RenderPopup({ togglePopup, render, setRender, setMaterials }) {
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!render) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [render]);
+  function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+  }
+
+  function rgbToHex(r, g, b) {
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+  }
+
+  const materialSetter = (materialsObject) => {
+    const materialsList = [];
+    // Iterate over each category (ceiling, floor, wall)
+    Object.keys(materialsObject).forEach((category) => {
+      materialsObject[category].forEach((texture) => {
+        // Extracting values from the texture object
+        const { thumbnail, color, name } = texture;
+        const [r, g, b] = color.replace(/[()]/g, "").split(",");
+        const colorHex = rgbToHex(parseInt(r), parseInt(g), parseInt(b));
+        // Creating a new texture object with desired format
+        const textureMaterial = {
+          materialName: name.split(".")[0].split("_").join(" "),
+          thumbnail: thumbnail,
+          link: `https://polyhaven.com/a/${name.split(".")[0]}`,
+          material: {
+            color: colorHex,
+            opacity: 1,
+            roughness: 1,
+            metalness: 0,
+            vertexColors: false,
+          },
+        };
+
+        // Pushing the texture material to the materials array
+        materialsList.push(textureMaterial);
+      });
+    });
+    setMaterials(materialsList);
+  };
   return (
     <div style={styles.popupOverlay}>
-      <div style={styles.popupContent}>
-        {render ? (
+      {loading ? (
+        <Spin />
+      ) : (
+        <div style={styles.popupContent}>
           <img src={render} alt="Placeholder" style={styles.image} />
-        ) : (
-          <Spin />
-        )}
-        <div style={styles.buttonGroup}>
-          <Button
-            type="text"
-            disabled={!render}
-            onClick={async () => {
-              // hit end point and set materials
-              try {
-                const formData = new FormData();
+          <div style={styles.buttonGroup}>
+            <Button
+              type="text"
+              disabled={!render}
+              onClick={async () => {
+                setLoading(true);
+                // hit end point and set materials
+                try {
+                  const formData = new FormData();
 
-                // Convert the image to a Blob
-                const blob = new Blob([render], { type: "image/png" });
+                  // Convert the image to a Blob
+                  const blob = new Blob([render], { type: "image/png" });
 
-                // Append the image Blob to the FormData object
-                formData.append("image", blob, "render.png");
-                const response = await fetch(
-                  "http://127.0.0.1:8000/image-analyzer",
-                  {
-                    method: "POST",
-                    headers: {
-                      accept: "application/json",
-                      // 'Content-Type' is automatically set to 'multipart/form-data' when using FormData
-                    },
-                    mode: "cors", // CORS mode
-                    credentials: "same-origin",
-                    body: formData,
-                  }
-                );
-                const result = await response.json();
-                console.log("Success:", result);
-              } catch (error) {
-                console.error("Error:", error);
-              }
-            }}
-          >
-            <Typography.Title level={5} style={{ margin: 0, color: "white" }}>
-              Continue
-            </Typography.Title>
-          </Button>
-          <Button
-            type="text"
-            onClick={() => {
-              togglePopup();
-              setRender(null);
-            }}
-          >
-            <Typography.Title level={5} style={{ margin: 0, color: "white" }}>
-              Reprompt
-            </Typography.Title>
-          </Button>
+                  // Append the image Blob to the FormData object
+                  formData.append("image", blob, "render.png");
+                  const response = await fetch(
+                    "http://127.0.0.1:8000/image-analyzer",
+                    {
+                      method: "POST",
+                      headers: {
+                        accept: "application/json",
+                        // 'Content-Type' is automatically set to 'multipart/form-data' when using FormData
+                      },
+                      mode: "cors", // CORS mode
+                      credentials: "same-origin",
+                      body: formData,
+                    }
+                  );
+                  const result = await response.json();
+                  materialSetter(result);
+                  togglePopup();
+                  setRender(null);
+                  setLoading(false);
+                } catch (error) {
+                  console.error("Error:", error);
+                }
+              }}
+            >
+              <Typography.Title level={5} style={{ margin: 0, color: "white" }}>
+                Continue
+              </Typography.Title>
+            </Button>
+            <Button
+              type="text"
+              onClick={() => {
+                togglePopup();
+                setRender(null);
+              }}
+            >
+              <Typography.Title level={5} style={{ margin: 0, color: "white" }}>
+                Reprompt
+              </Typography.Title>
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

@@ -1,11 +1,6 @@
-import {
-  CameraController,
-  SelectionExtension,
-  SpeckleStandardMaterial,
-} from "@speckle/viewer";
+import { SelectionExtension } from "@speckle/viewer";
 import { button, buttonGroup, folder, Leva, useControls } from "leva";
 import { useState } from "react";
-import * as THREE from "three";
 import { useViewer } from "../../context/viewer";
 export default function ControlsComponent({
   togglePopup,
@@ -14,68 +9,66 @@ export default function ControlsComponent({
   setMaterials,
 }) {
   const viewer = useViewer();
-  const camera = viewer.getExtension(CameraController);
   const selector = viewer.getExtension(SelectionExtension);
   const renderer = viewer.getRenderer();
 
-  const texture = new THREE.TextureLoader().load(
-    "https://threejs.org/examples/textures/uv_grid_opengl.jpg"
-  );
-  // immediately use the texture for material creation
-  // console.log(texture);
   const [selectedMaterial, setSelectedMaterial] = useState();
 
-  const speckleMaterial = new SpeckleStandardMaterial({
-    color: 0xee0022,
-    map: texture,
-  });
-  const materialParams = {
-    map: texture,
-    color: 0x0077ff, // Blue color (will be combined with the texture)
-    roughness: 0.5, // Medium roughness
-    metalness: 0.7, // Some metallic quality
-    emissive: 0x000000, // No emissive color
-    opacity: 0.9, // Slightly transparent
-    transparent: true, // Allow transparency
-    side: THREE.DoubleSide, // Double sided
-  };
-  const threeMaterial = new THREE.MeshStandardMaterial(materialParams);
+  const values2 = useControls("AI Render", {
+    textPrompt: { value: "", rows: true, label: "Text Prompt" },
+    "AI Render": button((get) => {
+      const textPrompt = get("AI Render.textPrompt");
+      if (!textPrompt) return alert(`Prompt is empty`);
+      viewer.screenshot().then(async (image) => {
+        const formData = new FormData();
 
-  // TODO: Change material feed to be from AI
-  // setMaterials([
-  //   {
-  //     materialName: "texture Material 1",
-  //     material: {
-  //       map: texture,
-  //       color: 0xee0022,
-  //       opacity: 1,
-  //       roughness: 1,
-  //       metalness: 0,
-  //       vertexColors: false,
-  //     },
-  //   },
-  //   {
-  //     materialName: "Speckle Material",
-  //     material: speckleMaterial,
-  //   },
-  //   {
-  //     materialName: "Material 3",
-  //     material: threeMaterial,
-  //   },
-  // ]);
+        // Convert the image to a Blob
+        const blob = new Blob([image], { type: "image/jpeg" });
+
+        // Append the image Blob to the FormData object
+        formData.append("image", blob);
+        togglePopup();
+
+        // Send the POST request using fetch
+        try {
+          const response = await fetch(
+            "http://127.0.0.1:8000/image-render?prompt=" + textPrompt,
+            {
+              method: "POST",
+              headers: {
+                accept: "application/json",
+                // 'Content-Type' is automatically set to 'multipart/form-data' when using FormData
+              },
+              mode: "cors", // CORS mode
+              credentials: "same-origin",
+              body: formData,
+            }
+          );
+          const result = await response.json();
+          setRender(`data:image/png;base64,${result.image}`);
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      });
+    }),
+  });
 
   const [values, set] = useControls(
     () => ({
       "Materials List": folder(
         materials.reduce((config, material, index) => {
           config[`SizeButtonGroup${index}`] = buttonGroup({
-            label: <img src={"logo"} style={{ width: 20, height: 20 }} />,
+            label: (
+              <img src={material.thumbnail} style={{ width: 20, height: 20 }} />
+            ),
             opts: {
               [material.materialName]: () => {
                 setSelectedMaterial(material);
                 set({ selectedMaterial: material.materialName });
               },
-              link: () => console.log(material.materialName),
+              link: () => {
+                window.open(material.link, "_blank");
+              },
             },
           });
           return config;
@@ -107,82 +100,11 @@ export default function ControlsComponent({
       //   //   const rvs = renderTree.getRenderViewsForNodeId(nodeId);
       //   //   const materials = renderer.getMaterial(rvs[0]);
       //   //   console.log(materials);
-      //   viewer.screenshot().then(async (image) => {
-      //     const formData = new FormData();
-
-      //     // Convert the image to a Blob
-      //     const blob = new Blob([image], {
-      //       type: "image/png",
-      //     });
-
-      //     // Append the image Blob to the FormData object
-      //     formData.append("image", blob, "render.png");
-
-      //     // Send the POST request using fetch
-      //     try {
-      //       const response = await fetch("http://127.0.0.1:8000/image-test", {
-      //         method: "POST",
-      //         headers: {
-      //           accept: "application/json",
-      //           // 'Content-Type' is automatically set to 'multipart/form-data' when using FormData
-      //         },
-      //         mode: "cors", // CORS mode
-      //         credentials: "same-origin",
-      //         body: formData,
-      //       });
-      //       const result = await response.json();
-      //       console.log("Success:", result);
-      //       // setRender(result.image);
-      //     } catch (error) {
-      //       console.error("Error:", error);
-      //     }
-      //   });
+      //   togglePopup();
       // }),
     }),
     [materials, selectedMaterial]
   );
-
-  const values2 = useControls("AI Render", {
-    textPrompt: { value: "", rows: true, label: "Text Prompt" },
-    "AI Render": button((get) => {
-      console.log("rendering...");
-      const textPrompt = get("AI Render.textPrompt");
-      if (!textPrompt) return alert(`Prompt is empty`);
-      viewer.screenshot().then(async (image) => {
-        const formData = new FormData();
-
-        // Convert the image to a Blob
-        const blob = new Blob([image], { type: "image/jpeg" });
-
-        // Append the image Blob to the FormData object
-        formData.append("image", blob);
-        togglePopup();
-
-        // Send the POST request using fetch
-        try {
-          const response = await fetch(
-            "http://127.0.0.1:8000/image-render?prompt=" + textPrompt,
-            {
-              method: "POST",
-              headers: {
-                accept: "application/json",
-                // 'Content-Type' is automatically set to 'multipart/form-data' when using FormData
-              },
-              mode: "cors", // CORS mode
-              credentials: "same-origin",
-              body: formData,
-            }
-          );
-          const result = await response.json();
-          // console.log("Success:", result);
-          setRender(`data:image/png;base64,${result.image}`);
-        } catch (error) {
-          console.error("Error:", error);
-        }
-      });
-      // alert(`This is the prompt: ${textPrompt}`);
-    }),
-  });
 
   return (
     <div
