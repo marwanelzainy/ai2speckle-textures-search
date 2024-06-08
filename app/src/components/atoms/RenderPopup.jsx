@@ -6,22 +6,26 @@ export function RenderPopup({ togglePopup, render, setRender }) {
     <div style={styles.popupOverlay}>
       <div style={styles.popupContent}>
         {render ? (
-          <img
-            src={`data:image/png;base64,${render}`}
-            alt="Placeholder"
-            style={styles.image}
-          />
+          <img src={render} alt="Placeholder" style={styles.image} />
         ) : (
           <Spin />
         )}
         <div style={styles.buttonGroup}>
           <Button
             type="text"
+            disabled={!render}
             onClick={async () => {
               // hit end point and set materials
               try {
+                const formData = new FormData();
+
+                // Convert the image to a Blob
+                const blob = new Blob([render], { type: "image/png" });
+
+                // Append the image Blob to the FormData object
+                formData.append("image", blob, "render.png");
                 const response = await fetch(
-                  "http://127.0.0.1:8000/image-render?prompt=",
+                  "http://127.0.0.1:8000/image-analyzer",
                   {
                     method: "POST",
                     headers: {
@@ -30,17 +34,15 @@ export function RenderPopup({ togglePopup, render, setRender }) {
                     },
                     mode: "cors", // CORS mode
                     credentials: "same-origin",
-                    body: "",
+                    body: formData,
                   }
                 );
                 const result = await response.json();
                 console.log("Success:", result);
-                setRender(result.image);
               } catch (error) {
                 console.error("Error:", error);
               }
             }}
-            disabled={!render}
           >
             <Typography.Title level={5} style={{ margin: 0, color: "white" }}>
               Continue

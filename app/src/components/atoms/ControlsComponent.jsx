@@ -99,14 +99,44 @@ export default function ControlsComponent({
         viewer.requestRender();
       }),
       // testbutton: button((get) => {
-      //   const worldTree = viewer.getWorldTree();
-      //   const node = selector.getSelectedNodes()[0];
-      //   const nodeId = node.model.id;
-      //   selector.unselectObjects([nodeId]);
-      //   const renderTree = worldTree.getRenderTree(nodeId);
-      //   const rvs = renderTree.getRenderViewsForNodeId(nodeId);
-      //   const materials = renderer.getMaterial(rvs[0]);
-      //   console.log(materials);
+      //   //   const worldTree = viewer.getWorldTree();
+      //   //   const node = selector.getSelectedNodes()[0];
+      //   //   const nodeId = node.model.id;
+      //   //   selector.unselectObjects([nodeId]);
+      //   //   const renderTree = worldTree.getRenderTree(nodeId);
+      //   //   const rvs = renderTree.getRenderViewsForNodeId(nodeId);
+      //   //   const materials = renderer.getMaterial(rvs[0]);
+      //   //   console.log(materials);
+      //   viewer.screenshot().then(async (image) => {
+      //     const formData = new FormData();
+
+      //     // Convert the image to a Blob
+      //     const blob = new Blob([image], {
+      //       type: "image/png",
+      //     });
+
+      //     // Append the image Blob to the FormData object
+      //     formData.append("image", blob, "render.png");
+
+      //     // Send the POST request using fetch
+      //     try {
+      //       const response = await fetch("http://127.0.0.1:8000/image-test", {
+      //         method: "POST",
+      //         headers: {
+      //           accept: "application/json",
+      //           // 'Content-Type' is automatically set to 'multipart/form-data' when using FormData
+      //         },
+      //         mode: "cors", // CORS mode
+      //         credentials: "same-origin",
+      //         body: formData,
+      //       });
+      //       const result = await response.json();
+      //       console.log("Success:", result);
+      //       // setRender(result.image);
+      //     } catch (error) {
+      //       console.error("Error:", error);
+      //     }
+      //   });
       // }),
     }),
     [materials, selectedMaterial]
@@ -144,8 +174,8 @@ export default function ControlsComponent({
             }
           );
           const result = await response.json();
-          console.log("Success:", result);
-          setRender(result.image);
+          // console.log("Success:", result);
+          setRender(`data:image/png;base64,${result.image}`);
         } catch (error) {
           console.error("Error:", error);
         }
