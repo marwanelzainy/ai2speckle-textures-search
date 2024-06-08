@@ -4,11 +4,15 @@ import {
   SpeckleStandardMaterial,
 } from "@speckle/viewer";
 import { button, buttonGroup, folder, Leva, useControls } from "leva";
-import logo from "logo192.png";
-import { useViewer } from "../../context/viewer";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as THREE from "three";
-export default function ControlsComponent({ togglePopup, setRender }) {
+import { useViewer } from "../../context/viewer";
+export default function ControlsComponent({
+  togglePopup,
+  setRender,
+  materials,
+  setMaterials,
+}) {
   const viewer = useViewer();
   const camera = viewer.getExtension(CameraController);
   const selector = viewer.getExtension(SelectionExtension);
@@ -38,34 +42,34 @@ export default function ControlsComponent({ togglePopup, setRender }) {
   const threeMaterial = new THREE.MeshStandardMaterial(materialParams);
 
   // TODO: Change material feed to be from AI
-  const [materials, setMaterials] = useState([
-    {
-      materialName: "texture Material 1",
-      material: {
-        map: texture,
-        // color: 0xee0022,
-        opacity: 1,
-        roughness: 1,
-        metalness: 0,
-        vertexColors: false,
-      },
-    },
-    {
-      materialName: "Speckle Material 2",
-      material: speckleMaterial,
-    },
-    {
-      materialName: "Material 3",
-      material: threeMaterial,
-    },
-  ]);
+  // setMaterials([
+  //   {
+  //     materialName: "texture Material 1",
+  //     material: {
+  //       map: texture,
+  //       color: 0xee0022,
+  //       opacity: 1,
+  //       roughness: 1,
+  //       metalness: 0,
+  //       vertexColors: false,
+  //     },
+  //   },
+  //   {
+  //     materialName: "Speckle Material",
+  //     material: speckleMaterial,
+  //   },
+  //   {
+  //     materialName: "Material 3",
+  //     material: threeMaterial,
+  //   },
+  // ]);
 
   const [values, set] = useControls(
     () => ({
       "Materials List": folder(
         materials.reduce((config, material, index) => {
           config[`SizeButtonGroup${index}`] = buttonGroup({
-            label: <img src={logo} style={{ width: 20, height: 20 }} />,
+            label: <img src={"logo"} style={{ width: 20, height: 20 }} />,
             opts: {
               [material.materialName]: () => {
                 setSelectedMaterial(material);
@@ -94,16 +98,16 @@ export default function ControlsComponent({ togglePopup, setRender }) {
         renderer.setMaterial(rvs, selectedMaterial.material);
         viewer.requestRender();
       }),
-      testbutton: button((get) => {
-        const worldTree = viewer.getWorldTree();
-        const node = selector.getSelectedNodes()[0];
-        const nodeId = node.model.id;
-        selector.unselectObjects([nodeId]);
-        const renderTree = worldTree.getRenderTree(nodeId);
-        const rvs = renderTree.getRenderViewsForNodeId(nodeId);
-        const materials = renderer.getMaterial(rvs[0]);
-        console.log(materials);
-      }),
+      // testbutton: button((get) => {
+      //   const worldTree = viewer.getWorldTree();
+      //   const node = selector.getSelectedNodes()[0];
+      //   const nodeId = node.model.id;
+      //   selector.unselectObjects([nodeId]);
+      //   const renderTree = worldTree.getRenderTree(nodeId);
+      //   const rvs = renderTree.getRenderViewsForNodeId(nodeId);
+      //   const materials = renderer.getMaterial(rvs[0]);
+      //   console.log(materials);
+      // }),
     }),
     [materials, selectedMaterial]
   );
@@ -111,13 +115,41 @@ export default function ControlsComponent({ togglePopup, setRender }) {
   const values2 = useControls("AI Render", {
     textPrompt: { value: "", rows: true, label: "Text Prompt" },
     "AI Render": button((get) => {
+      console.log("rendering...");
       const textPrompt = get("AI Render.textPrompt");
       if (!textPrompt) return alert(`Prompt is empty`);
-      viewer.screenshot().then((data) => {
-        // fetch and then set render
-        setRender(data);
+      viewer.screenshot().then(async (image) => {
+        const formData = new FormData();
+
+        // Convert the image to a Blob
+        const blob = new Blob([image], { type: "image/jpeg" });
+
+        // Append the image Blob to the FormData object
+        formData.append("image", blob);
+        togglePopup();
+
+        // Send the POST request using fetch
+        try {
+          const response = await fetch(
+            "http://127.0.0.1:8000/image-render?prompt=" + textPrompt,
+            {
+              method: "POST",
+              headers: {
+                accept: "application/json",
+                // 'Content-Type' is automatically set to 'multipart/form-data' when using FormData
+              },
+              mode: "cors", // CORS mode
+              credentials: "same-origin",
+              body: formData,
+            }
+          );
+          const result = await response.json();
+          console.log("Success:", result);
+          setRender(result.image);
+        } catch (error) {
+          console.error("Error:", error);
+        }
       });
-      togglePopup();
       // alert(`This is the prompt: ${textPrompt}`);
     }),
   });

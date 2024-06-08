@@ -1,18 +1,11 @@
-import React from "react";
-import { Outlet, Link } from "react-router-dom";
-import { Typography, Layout, Menu, Row, Col, Space } from "antd";
-import { DatabaseFilled } from "@ant-design/icons";
+import { Col, Layout, Row, Typography } from "antd";
 import AuthButton from "components/atoms/AuthButton";
 import ProjectsButton from "components/atoms/ProjectsButton";
+import { Link, Outlet } from "react-router-dom";
 
 const { Header, Content, Footer } = Layout;
 
-type Props = {
-  appName?: string;
-  children?: React.ReactNode;
-};
-
-const Root = ({ children, appName }: Props) => {
+const Root = ({ children, appName }) => {
   return (
     <Layout className="layout">
       <Header>

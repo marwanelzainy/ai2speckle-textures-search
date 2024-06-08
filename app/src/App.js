@@ -2,19 +2,19 @@ import React from "react";
 import {
   createBrowserRouter,
   createRoutesFromElements,
-  RouterProvider,
   Route,
+  RouterProvider,
 } from "react-router-dom";
 
 import { AuthProvider } from "context/auth";
 import { GraphqlProvider } from "context/graphql";
 import { UserProvider } from "context/user";
 
-import Root from "components/templates/Root";
-import Index from "components/pages/Index";
-import AuthCallback from "components/pages/AuthCallback";
-import StreamList from "components/pages/StreamList";
-import Model from "components/pages/Model";
+import AuthCallback from "./components/pages/AuthCallback";
+import Index from "./components/pages/Index";
+import StreamList from "./components/pages/StreamList";
+import Root from "./components/templates/Root";
+import Model from "./components/pages/Model";
 
 const App = () => {
   return (

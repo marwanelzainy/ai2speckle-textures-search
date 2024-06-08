@@ -1,8 +1,6 @@
 import { useMemo } from "react";
 import { gql, useQuery } from "@apollo/client";
 
-type Props = {};
-
 const GET_STREAMS = gql`
   query GetStreams {
     streams {
@@ -25,7 +23,7 @@ const GET_STREAMS = gql`
   }
 `;
 
-export const useStreams = ({}: Props) => {
+export const useStreams = () => {
   const { loading, error, data } = useQuery(GET_STREAMS);
 
   const streams = useMemo(() => {

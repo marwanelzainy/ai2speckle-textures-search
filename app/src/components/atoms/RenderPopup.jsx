@@ -1,17 +1,46 @@
 import { Button, Typography } from "antd";
+import { Spin } from "antd";
 
-export function RenderPopup({ togglePopup, render }) {
+export function RenderPopup({ togglePopup, render, setRender }) {
   return (
     <div style={styles.popupOverlay}>
       <div style={styles.popupContent}>
-        <img src={render} alt="Placeholder" style={styles.image} />
+        {render ? (
+          <img
+            src={`data:image/png;base64,${render}`}
+            alt="Placeholder"
+            style={styles.image}
+          />
+        ) : (
+          <Spin />
+        )}
         <div style={styles.buttonGroup}>
           <Button
             type="text"
-            onClick={() => {
+            onClick={async () => {
               // hit end point and set materials
-              alert("Button 1 clicked");
+              try {
+                const response = await fetch(
+                  "http://127.0.0.1:8000/image-render?prompt=",
+                  {
+                    method: "POST",
+                    headers: {
+                      accept: "application/json",
+                      // 'Content-Type' is automatically set to 'multipart/form-data' when using FormData
+                    },
+                    mode: "cors", // CORS mode
+                    credentials: "same-origin",
+                    body: "",
+                  }
+                );
+                const result = await response.json();
+                console.log("Success:", result);
+                setRender(result.image);
+              } catch (error) {
+                console.error("Error:", error);
+              }
             }}
+            disabled={!render}
           >
             <Typography.Title level={5} style={{ margin: 0, color: "white" }}>
               Continue
@@ -20,15 +49,10 @@ export function RenderPopup({ togglePopup, render }) {
           <Button
             type="text"
             onClick={() => {
-              // fetch and then set render
-              alert("Button 2 clicked");
+              togglePopup();
+              setRender(null);
             }}
           >
-            <Typography.Title level={5} style={{ margin: 0, color: "white" }}>
-              Rerender
-            </Typography.Title>
-          </Button>
-          <Button type="text" onClick={togglePopup}>
             <Typography.Title level={5} style={{ margin: 0, color: "white" }}>
               Reprompt
             </Typography.Title>

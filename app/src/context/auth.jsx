@@ -11,15 +11,15 @@ const SPECKLE_APP_SECRET = process.env.REACT_APP_SPECKLE_SECRET ?? "94217b3eee";
 
 // Create an auth context
 export const AuthContext = React.createContext({
-  token: null as string | null,
-  refreshToken: null as string | null,
+  token: null,
+  refreshToken: null,
   login: () => {},
-  exchangeAccessCode: (accessCode: string) => Promise.resolve(),
+  exchangeAccessCode: (accessCode) => Promise.resolve(),
   logOut: () => {},
 });
 
 // Create an auth provider
-export const AuthProvider = ({ children }: any) => {
+export const AuthProvider = ({ children }) => {
   // Get the token and refreshToken from localStorage
   const [token, setToken] = React.useState(localStorage.getItem(TOKEN));
   const [refreshToken, setRefreshToken] = React.useState(
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }: any) => {
   };
 
   // Create an exchangeAccessCode function that exchanges the provided access code with a token/refreshToken pair, and saves them to local storage.
-  const exchangeAccessCode = async (accessCode: string) => {
+  const exchangeAccessCode = async (accessCode) => {
     var res = await fetch(`${SERVER_URL}/auth/token/`, {
       method: "POST",
       headers: {

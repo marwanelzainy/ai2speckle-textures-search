@@ -6,6 +6,7 @@ export default function SpeckleViewer() {
   const viewer = useViewer();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [render, setRender] = useState();
+  const [materials, setMaterials] = useState([]);
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
   };
@@ -14,6 +15,7 @@ export default function SpeckleViewer() {
       <div
         id="renderer"
         style={{
+          // maxWidth: "1200px",
           width: "100%",
           height: "100%",
           left: 0,
@@ -25,9 +27,19 @@ export default function SpeckleViewer() {
       />
       {viewer && (
         <div>
-          <Controls togglePopup={togglePopup} setRender={setRender} />
+          <Controls
+            togglePopup={togglePopup}
+            setRender={setRender}
+            setMaterials={setMaterials}
+            materials={materials}
+          />
           {isPopupOpen && (
-            <RenderPopup togglePopup={togglePopup} render={render} />
+            <RenderPopup
+              togglePopup={togglePopup}
+              render={render}
+              setRender={setRender}
+              setMaterials={setMaterials}
+            />
           )}
         </div>
       )}
