@@ -50,6 +50,42 @@ def crop_center_largest_contour(folder_path):
         cropped_pil_image = Image.fromarray(cvtColor(cropped_image_rgba, COLOR_BGRA2RGB))
         cropped_pil_image.save(image_path)
 
+def calculate_variance(patch):
+    # Convert patch to numpy array
+    patch_array = np.array(patch)
+    # Calculate the variance
+    variance = np.var(patch_array)
+    return variance
+
+def crop_least_variant_patch(folder_path):
+    for each_image in os.listdir(folder_path):
+        image_path = os.path.join(folder_path, each_image)
+        image = Image.open(image_path)
+        # define window size
+        width, height = image.size
+        window_size = round(height * .2)
+        stride = round(window_size * .2)
+        min_variance = float('inf')
+        best_patch = None
+        # slide window across image
+        for x in range(0, width - window_size + 1, stride):
+            for y in range(0, height - window_size + 1, stride):
+                patch = image.crop((x,y,x + window_size, y + window_size))
+                patch_w, patch_h = patch.size
+                total_pixels = patch_w * patch_h
+                white_pixels = np.sum(np.all(np.array(patch) == [255, 255, 255], axis=2))
+                if white_pixels < (total_pixels / 2):
+                    # calculate variance / standard deviation
+                    variance = calculate_variance(patch)
+                    if variance < min_variance:
+                        # update minimum var / sd
+                        min_variance = variance
+                        best_patch = patch
+        try:
+            best_patch.save(image_path)
+        except AttributeError as e:
+            print("No good homogenous patch to save.")
+
 def extract_embeddings(transformation_chain, model: torch.nn.Module):
     """Utility to compute embeddings."""
     device = model.device
