@@ -91,8 +91,10 @@ async def image_render(prompt: str, image: UploadFile = File(...)):
                 img_size=768,
                 api_name="/on_submit"
         )
-
+        
         new_image_path = result
+        # delete image_path
+        os.remove(image_path)
         if not os.path.exists(new_image_path):
             raise HTTPException(status_code=404, detail="Image not found")
         
@@ -100,6 +102,7 @@ async def image_render(prompt: str, image: UploadFile = File(...)):
         with open(new_image_path, "rb") as img_file:
             base64_str = base64.b64encode(img_file.read()).decode('utf-8')
             
+        os.remove(new_image_path)
         return JSONResponse(content={"image": base64_str}, status_code=200)
     except Exception as e:
         print(str(e))
