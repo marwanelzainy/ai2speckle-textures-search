@@ -1,4 +1,4 @@
-from image_helpers import convert_images_to_grayscale, crop_center_largest_contour, fetch_similar
+from image_helpers import convert_images_to_grayscale, crop_least_variant_patch, fetch_similar
 import datasets as ds
 import re
 import torchvision.transforms as T
@@ -32,7 +32,7 @@ def similarity_inference(directory):
             color_dict[each_image] = average_color_value
 
     convert_images_to_grayscale(directory)
-    crop_center_largest_contour(directory)
+    crop_least_variant_patch(directory)
 
     # define processing variables needed for embedding calculation
     root_directory = "data/" #"C:/Users/josie/OneDrive - Chalmers/Documents/Speckle hackathon/data/"

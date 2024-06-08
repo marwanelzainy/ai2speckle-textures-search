@@ -35,6 +35,13 @@ def image_analyzer(image: UploadFile = File(...)):
     top k materials similar to the wall, ceiling, and floor.
     """
     try:
+        # delete contents of image folder
+        for filename in os.listdir(temp_processing_dir):
+            file_path = os.path.join(temp_processing_dir, filename)
+            try:
+                os.remove(file_path)  # Remove the file
+            except Exception as e:
+                print(f"Failed to delete {file_path}. Reason: {e}")
         # load image
         image_path = os.path.join(input_images_dir, "image.png")
         with open(image_path, "wb") as buffer:
