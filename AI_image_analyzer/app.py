@@ -77,13 +77,17 @@ async def image_render(prompt: str, image: UploadFile = File(...)):
         print(f"recieved prompt: {prompt} and image: {image}")
         image_path = os.path.join(input_images_dir, image.filename+datetime.now().strftime("%Y-%m-%d_%H-%M-%S")+".png")
         contents = await image.read()
-        # Remove the prefix "data:image/png;base64,"
-        image_data = contents.split(b";base64,")[1]
-        # Decode base64 data
-        decoded_image = base64.b64decode(image_data)
-        image = Image.open(io.BytesIO(decoded_image))
+        if contents.startswith(b"data:image/png;base64"):
+            # Remove the prefix "data:image/png;base64,"
+            image_data = contents.split(b";base64,")[1]
+            # Decode base64 data
+            decoded_image = base64.b64decode(image_data)
+            img = Image.open(io.BytesIO(decoded_image))
+
+        else:
+            img = Image.open(image.file)
         # Convert image to grayscale
-        grayscale_image = image.convert('L')
+        grayscale_image = img.convert('L')
         # Save the processed image to the specified path
         grayscale_image.save(image_path)
         result = client.predict(
@@ -111,6 +115,37 @@ async def image_render(prompt: str, image: UploadFile = File(...)):
             
         os.remove(new_image_path)
         return JSONResponse(content={"image": base64_str}, status_code=200)
+    except Exception as e:
+        print(str(e))
+        raise HTTPException(status_code=500, detail=str(e))
+    
+
+@app.post("/image-test")
+async def image_test(image: UploadFile = File(...)):
+   
+    try:
+        print(f"image: {image}")
+        image_path = os.path.join(input_images_dir, image.filename+datetime.now().strftime("%Y-%m-%d_%H-%M-%S")+".png")
+        contents = await image.read()
+        if contents.startswith(b"data:image/png;base64"):
+            image_data = contents.split(b";base64,")[1]
+            # Decode base64 data
+            decoded_image = base64.b64decode(image_data)
+            img = Image.open(io.BytesIO(decoded_image))
+
+        else:
+            img = Image.open(image.file)
+        # print(f"contents: {contents}")
+        # Remove the prefix "data:image/png;base64,"
+        # image_data = contents.split(b";base64,")[1]
+        # Decode base64 data
+        # decoded_image = base64.b64decode(image_data)
+        # image = Image.open(io.BytesIO(decoded_image))
+        # Convert image to grayscale
+        grayscale_image = img.convert('L')
+        # Save the processed image to the specified path
+        
+        return JSONResponse(content={"image": 'image'}, status_code=200)
     except Exception as e:
         print(str(e))
         raise HTTPException(status_code=500, detail=str(e))
