@@ -2,7 +2,6 @@ import base64
 import io
 from fastapi import FastAPI, UploadFile, File, HTTPException
 import os
-import shutil
 from PIL import Image
 from fastapi.responses import JSONResponse
 from semantic_seg_model import segmentation_inference
@@ -29,7 +28,7 @@ temp_processing_dir = input_images_dir + "processed/"
 
 # Define a function to handle the POST request at `image-analyzer`
 @app.post("/image-analyzer")
-def image_analyzer(image: UploadFile = File(...)):
+async def image_analyzer(image: UploadFile = File(...)):
     """
     This function takes in an image filepath and will return the PolyHaven url addresses of the 
     top k materials similar to the wall, ceiling, and floor.
@@ -42,15 +41,25 @@ def image_analyzer(image: UploadFile = File(...)):
                 os.remove(file_path)  # Remove the file
             except Exception as e:
                 print(f"Failed to delete {file_path}. Reason: {e}")
+
         # load image
-        image_path = os.path.join(input_images_dir, "image.png")
-        with open(image_path, "wb") as buffer:
-            shutil.copyfileobj(image.file, buffer)
-        image = Image.open(image_path)
+        contents = await image.read()
+        if contents.startswith(b"data:image/png;base64"):
+            # Remove the prefix "data:image/png;base64,"
+            image_data = contents.split(b";base64,")[1]
+            # Decode base64 data
+            decoded_image = base64.b64decode(image_data)
+            img = Image.open(io.BytesIO(decoded_image))
+
+        else:
+            img = Image.open(image.file)
+
         print("image loaded successfully. Processing image for segmentation and similarity inference...", datetime.now())
+
         # segment into components
-        segmentation_inference(image, temp_processing_dir)
+        segmentation_inference(img, temp_processing_dir)
         print("image segmented successfully. Starting similarity inference...", datetime.now())
+
         # identify similar materials for each component
         matching_textures = similarity_inference(temp_processing_dir)
         print("done", datetime.now())
