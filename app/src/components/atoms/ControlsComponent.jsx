@@ -15,6 +15,11 @@ export default function ControlsComponent({
 
   const [selectedMaterial, setSelectedMaterial] = useState();
 
+  const _ = useControls({
+    "Commit to Speckle": button(() => {
+      alert(`Commit to Speckle to be implemented`);
+    }),
+  });
   const values2 = useControls("AI Render", {
     textPrompt: { value: "", rows: true, label: "Text Prompt" },
     "AI Render": button((get) => {
