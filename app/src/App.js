@@ -16,6 +16,8 @@ import StreamList from "./components/pages/StreamList";
 import Root from "./components/templates/Root";
 import Model from "./components/pages/Model";
 
+export const AI_API_URL =
+  process.env.REACT_APP_AI_API_URL ?? "http://127.0.0.1:8000";
 const App = () => {
   return (
     <AuthProvider>

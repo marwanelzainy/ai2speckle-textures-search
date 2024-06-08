@@ -1,5 +1,6 @@
 import { Button, Typography } from "antd";
 import { Spin } from "antd";
+import { AI_API_URL } from "App";
 import React, { useEffect, useState } from "react";
 
 export function RenderPopup({ togglePopup, render, setRender, setMaterials }) {
@@ -72,19 +73,16 @@ export function RenderPopup({ togglePopup, render, setRender, setMaterials }) {
 
                   // Append the image Blob to the FormData object
                   formData.append("image", blob, "render.png");
-                  const response = await fetch(
-                    "http://127.0.0.1:8000/image-analyzer",
-                    {
-                      method: "POST",
-                      headers: {
-                        accept: "application/json",
-                        // 'Content-Type' is automatically set to 'multipart/form-data' when using FormData
-                      },
-                      mode: "cors", // CORS mode
-                      credentials: "same-origin",
-                      body: formData,
-                    }
-                  );
+                  const response = await fetch(`${AI_API_URL}/image-analyzer`, {
+                    method: "POST",
+                    headers: {
+                      accept: "application/json",
+                      // 'Content-Type' is automatically set to 'multipart/form-data' when using FormData
+                    },
+                    mode: "cors", // CORS mode
+                    credentials: "same-origin",
+                    body: formData,
+                  });
                   const result = await response.json();
                   materialSetter(result);
                   togglePopup();

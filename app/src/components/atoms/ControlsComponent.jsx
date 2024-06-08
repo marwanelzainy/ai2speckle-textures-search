@@ -2,6 +2,7 @@ import { SelectionExtension } from "@speckle/viewer";
 import { button, buttonGroup, folder, Leva, useControls } from "leva";
 import { useState } from "react";
 import { useViewer } from "../../context/viewer";
+import { AI_API_URL } from "App";
 export default function ControlsComponent({
   togglePopup,
   setRender,
@@ -32,7 +33,7 @@ export default function ControlsComponent({
         // Send the POST request using fetch
         try {
           const response = await fetch(
-            "http://127.0.0.1:8000/image-render?prompt=" + textPrompt,
+            `${AI_API_URL}/image-render?prompt=${textPrompt}`,
             {
               method: "POST",
               headers: {
